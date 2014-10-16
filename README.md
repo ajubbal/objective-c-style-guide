@@ -10,7 +10,7 @@ This style guide is different from other Objective-C style guides you may see, b
 
 ## Credits
 
-Forked from [raywenderlich objective-c style guide](https://github.com/raywenderlich/objective-c-style-guide).
+Forked from [raywenderlich objective-c style guide](https://github.com/raywenderlich/objective-c-style-guide). Modified by Aaron Jubbal.
 
 ## Background
 
@@ -113,7 +113,7 @@ Use `#pragma mark -` to categorize methods in functional groupings and protocol/
 
 ## Spacing
 
-* Indent using 2 spaces (this conserves space in print and makes line wrapping less likely). Never indent with tabs. Be sure to set this preference in Xcode.
+* Indent using 4 spaces (default). Never indent with tabs. Be sure to set this preference in Xcode.
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **Preferred:**
@@ -137,7 +137,7 @@ else {
 ```
 
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
-* Prefer using auto-synthesis. But if necessary, `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
+* Prefer using auto-synthesis (i.e. no `@synthesize`). But if necessary, `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
 * Colon-aligning method invocation should often be avoided.  There are cases where a method signature may have >= 3 colons and colon-aligning makes the code more readable. Please do **NOT** however colon align methods containing blocks because Xcode's indenting makes it illegible.
 
 **Preferred:**
@@ -188,14 +188,14 @@ UIButton *settingsButton;
 UIButton *setBut;
 ```
 
-A three letter prefix should always be used for class names and constants, however may be omitted for Core Data entity names. For any official raywenderlich.com books, starter kits, or tutorials, the prefix 'RWT' should be used.
+A three letter prefix should always be used for class names and constants, however may be omitted for Core Data entity names. The prefix 'TUN' should be used.
 
-Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
+Constants should be camel-case with all words capitalized and prefixed by 'TUN'.
 
 **Preferred:**
 
 ```objc
-static NSTimeInterval const RWTTutorialViewControllerNavigationFadeAnimationDuration = 0.3;
+static NSTimeInterval const TUNFadeAnimationDuration = 0.3;
 ```
 
 **Not Preferred:**
@@ -281,19 +281,19 @@ Direct access to instance variables that 'back' properties should be avoided exc
 
 ## Property Attributes
 
-Property attributes should be explicitly listed, and will help new programmers when reading the code.  The order of properties should be storage then atomicity, which is consistent with automatically generated code when connecting UI elements from Interface Builder.
+Property attributes should be explicitly listed.  The order of properties should be atomicity then storage.
 
 **Preferred:**
 
 ```objc
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (strong, nonatomic) NSString *tutorialName;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
+@property (nonatomic, strong) NSString *tutorialName;
 ```
 
 **Not Preferred:**
 
 ```objc
-@property (nonatomic, weak) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (nonatomic) NSString *tutorialName;
 ```
 
@@ -361,9 +361,9 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **Preferred:**
 
 ```objc
-static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+static NSString * const TUNAboutViewControllerCompanyName = @"RayWenderlich.com";
 
-static CGFloat const RWTImageThumbnailHeight = 50.0;
+static CGFloat const TUNImageThumbnailHeight = 50.0;
 ```
 
 **Not Preferred:**
@@ -381,10 +381,10 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 **For Example:**
 
 ```objc
-typedef NS_ENUM(NSInteger, RWTLeftMenuTopItemType) {
-  RWTLeftMenuTopItemMain,
-  RWTLeftMenuTopItemShows,
-  RWTLeftMenuTopItemSchedule
+typedef NS_ENUM(NSInteger, TUNLeftMenuTopItemType) {
+  TUNLeftMenuTopItemMain,
+  TUNLeftMenuTopItemShows,
+  TUNLeftMenuTopItemSchedule
 };
 ```
 
@@ -392,10 +392,10 @@ You can also make explicit value assignments (showing older k-style constant def
 
 ```objc
 typedef NS_ENUM(NSInteger, RWTGlobalConstants) {
-  RWTPinSizeMin = 1,
-  RWTPinSizeMax = 5,
-  RWTPinCountMin = 100,
-  RWTPinCountMax = 500,
+  TUNPinSizeMin = 1,
+  TUNPinSizeMax = 5,
+  TUNPinCountMin = 100,
+  TUNPinCountMax = 500,
 };
 ```
 
@@ -473,7 +473,7 @@ switch (menuType) {
 
 ## Private Properties
 
-Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `RWTPrivate` or `private`) should never be used unless extending another class.   The Anonymous category can be shared/exposed for testing using the <headerfile>+Private.h file naming convention.
+Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `TUNPrivate` or `private`) should never be used unless extending another class.   The Anonymous category can be shared/exposed for testing using the <headerfile>+Private.h file naming convention.
 
 **For Example:**
 
@@ -683,36 +683,6 @@ Singleton objects should use a thread-safe pattern for creating their shared ins
 }
 ```
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
-
-
-## Line Breaks
-
-Line breaks are an important topic since this style guide is focused for print and online readability.
-
-For example:
-```objc
-self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
-```
-A long line of code like this should be carried on to the second line adhering to this style guide's Spacing section (two spaces).
-```objc
-self.productsRequest = [[SKProductsRequest alloc] 
-  initWithProductIdentifiers:productIdentifiers];
-```
-
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the raywenderlich.com site!  It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic.  The end square bracket is used because it represents the largest smile able to be captured using ascii art.  A half-hearted smile is represented if an end parenthesis is used, and thus not preferred.
-
-**Preferred:**
-```objc
-:]
-```
-
-**Not Preferred:**
-```objc
-:)
-```  
 
 
 ## Xcode project
